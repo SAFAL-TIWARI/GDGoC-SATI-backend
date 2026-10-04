@@ -1,5 +1,11 @@
 import dns from 'dns';
-dns.setServers(['8.8.8.8', '1.1.1.1']);
+if (process.platform === 'win32' && !process.env.VERCEL) {
+  try {
+    dns.setServers(['8.8.8.8', '1.1.1.1']);
+  } catch (e) {
+    // Ignore DNS override errors
+  }
+}
 
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
